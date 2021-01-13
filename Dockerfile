@@ -1,3 +1,9 @@
+# links
+# https://github.com/Tremeschin/ardour-crosscompile-arch
+# https://github.com/garyritchie/ardour-build
+# https://musicsecrets.euniversity.pub/ardour.html
+# https://guysherman.com/2015/08/16/building-ardour-on-windows-with-msys2/
+
 FROM archlinux
 
 WORKDIR /opt
@@ -20,12 +26,7 @@ USER docker
 RUN cd /opt/yay-git/; makepkg -si --noconfirm
 RUN pwd; ls; sudo rm -R yay-git/; cd ardour-crosscompile-arch/; python main.py
 
-RUN cd $HOME; \
-  git clone git://git.ardour.org/ardour/ardour.git;\
-  cd ardour
+ADD build_ardour /usr/local/bin/build_ardour
+RUN chmod +x /usr/local/bin/build_ardour
 
-#RUN ./waf configure --dist-target=mingw --no-phone-home; \
-#  ./waf; \
-#  cd tools/linux_packaging; \
-#  ./build --public --strip some ; \
-#  ./package --public --singlearch
+ENTRYPOINT ["build_ardour"]

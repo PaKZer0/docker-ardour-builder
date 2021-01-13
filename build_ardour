@@ -1,0 +1,10 @@
+## run in script entrypoint
+cd $HOME; \
+  git clone git://git.ardour.org/ardour/ardour.git;\
+  cd ardour
+
+./waf configure --dist-target=mingw --no-phone-home; \
+  ./waf; \
+  cd tools/linux_packaging; \
+  ./build --public --strip some ; \
+  ./package --public --singlearch
